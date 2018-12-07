@@ -90,7 +90,7 @@ void replace_specials() {
 #define IN  1
 #define OUT 0
 
-void wc () {
+void wc() {
     int c, nl, nw, nc, state;
     state = OUT;
     nl = nw = nc = 0;
@@ -98,11 +98,12 @@ void wc () {
 	++nc;
 	if (c == '\n')
 	    ++nl;
-	if (c == ' ' || c == '\t' || c == '\n')
+	if (c == ' ' || c == '\t' || c == '\n') {
 	    state = OUT;
-	else if (state == OUT)
+	} else if (state == OUT) {
 	    state = IN;
-	++nw;
+	    ++nw;
+	}
     }
     printf("\n"
 	   "Number of lines: %d\n"
@@ -111,13 +112,19 @@ void wc () {
 	   nl, nw, nc);
 }
 
-void one_word_line () {
+void one_word_line() {
     int c;
+    int lc;
     while ((c = getchar()) != EOF) {
-	if (c == ' ' || c == '\t')
-	    putchar('\n');
-	else
+	if (c == ' ' || c == '\t') {
+	    if (lc != '\n') {
+		putchar('\n');
+		lc = '\n';
+	    }
+	} else{
 	    putchar(c);
+	    lc = c;
+	}
     }
 }
 
@@ -129,5 +136,6 @@ int main() {
     /* truncate_whitespace(); */
     /* count_btl(); */
     /* replace_specials(); */
-    wc();
+    /* wc(); */
+    one_word_line();
 }

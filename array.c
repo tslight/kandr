@@ -28,9 +28,28 @@ void count_inputs() {
 }
 
 void word_histogram() {
+    int c, wc, cw, wl;
+    cw = wc = wl = 0;
 
+    while ((c = getchar()) != EOF) {
+	if (c == ' ' || c == '\t' || c == '\n')
+	    ++wc;
+    }
+    int words[wc];
+
+    while ((c = getchar()) != EOF) {
+	++cw;
+	if (c != ' ' || c != '\t' || c != '\n')
+	    wl++;
+	words[cw] = wl;
+    }
+
+    for (int i = 0; i < wc; i++) {
+	printf("Word Length: %d\n", words[i]);
+    }
 }
 
 int main() {
-    count_inputs();
+    /* count_inputs(); */
+    word_histogram();
 }

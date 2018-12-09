@@ -27,26 +27,46 @@ void count_inputs() {
     printf("\nOther: %d\n", no);
 }
 
+// https://codereview.stackexchange.com/q/106542
 void word_histogram() {
-    int c, wc, cw, wl;
-    cw = wc = wl = 0;
+    int c, i, j, len, ne, max;
+    i = j = ne = len = 0;
+    max = 25;
+    int h[max];
+
+    for (int i = 0; i < max; i++) {
+	h[i] = 0;
+    }
 
     while ((c = getchar()) != EOF) {
-	if (c == ' ' || c == '\t' || c == '\n')
-	    ++wc;
+	if (c == ' ' || c == '\n' || c == '\t') {
+	    if (len < max)
+		ne = len;
+	    else
+		ne = max;
+	    h[ne-1]++;
+	    len = 0;
+	} else {
+	    len++;
+	}
     }
-    int words[wc];
 
-    while ((c = getchar()) != EOF) {
-	++cw;
-	if (c != ' ' || c != '\t' || c != '\n')
-	    wl++;
-	words[cw] = wl;
+    for (i = max; i > 0; i--) {
+	printf("%3d|", i);
+	for (j = 0; j < max; j++) {
+	    if (h[j] < i)
+		printf("  ");
+	    else
+		printf(" #");
+	}
+	printf("\n");
     }
 
-    for (int i = 0; i < wc; i++) {
-	printf("Word Length: %d\n", words[i]);
+    printf("   ");
+    for (i = 0; i < max; i++) {
+	printf("--");
     }
+    printf("\n");
 }
 
 int main() {
